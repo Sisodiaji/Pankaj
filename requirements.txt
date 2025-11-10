@@ -1,0 +1,6 @@
+Flask==3.0.0
+Werkzeug==3.0.1
+selenium==4.16.0
+gunicorn==21.2.0
+chromedriver-autoinstaller==0.6.4
+requests==2.31.0
