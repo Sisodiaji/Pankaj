@@ -6,7 +6,7 @@ app.secret_key = os.environ.get("FLASK_SECRET", "change-me-please")
 
 APP_ID = os.environ.get("FB_APP_ID", "1549920276327064")
 APP_SECRET = os.environ.get("FB_APP_SECRET", "d9944bc84aa7c88807a795915e1a5aaf")
-REDIRECT_URI = os.environ.get("FB_REDIRECT_URI", "https://your-deploy-url.com/callback")
+REDIRECT_URI = os.environ.get("FB_REDIRECT_URI", "https://pankaj-1ibi.onrender.com/callback")
 SCOPES = os.environ.get("FB_SCOPES", "public_profile,email")
 
 @app.route("/")
