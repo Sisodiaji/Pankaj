@@ -3,7 +3,7 @@ import requests
 
 APP_ID = "714013164690867"
 APP_SECRET = "169b13848c922fa9139a6ac610726feb"
-REDIRECT_URI = "https://pankaj-1ibi.onrender.com/callback"
+REDIRECT_URI = "https://pankaj-2-u0fa.onrender.com/callback"
 
 app = Flask(__name__)
 
